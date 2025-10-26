@@ -609,9 +609,57 @@ footer a {
         font-size: 2rem;
     }
 
-    .services-grid,
-    .pricing-grid {
+    .services-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* Pricing Slider Mobile */
+    .pricing-slider-wrapper {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        padding: 2rem 0;
+    }
+
+    .pricing-grid {
+        display: flex;
+        gap: 1.5rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        padding: 0 10%;
+    }
+
+    .pricing-grid::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+    .pricing-card {
+        flex: 0 0 80%;
+        scroll-snap-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+
+    .pricing-card.active {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .pricing-card:not(.active) {
+        filter: brightness(0.6);
+    }
+
+    .pricing-card.featured {
+        border: 1px solid var(--primary-blue);
+    }
+
+    /* Ensure the featured badge stays visible */
+    .featured-badge {
+        z-index: 10;
     }
 }
 

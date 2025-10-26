@@ -93,3 +93,63 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Pricing cards slider functionality
+const initPricingSlider = () => {
+    const pricingGrid = document.querySelector('.pricing-grid');
+    const pricingCards = document.querySelectorAll('.pricing-card');
+
+    if (!pricingGrid || pricingCards.length === 0) return;
+
+    // Function to update active card based on scroll position
+    const updateActiveCard = () => {
+        const scrollLeft = pricingGrid.scrollLeft;
+        const cardWidth = pricingCards[0].offsetWidth;
+        const gap = parseFloat(getComputedStyle(pricingGrid).gap) || 0;
+
+        // Calculate which card is in the center
+        const centerPosition = scrollLeft + (pricingGrid.offsetWidth / 2);
+        let activeIndex = 0;
+
+        pricingCards.forEach((card, index) => {
+            const cardLeft = card.offsetLeft;
+            const cardCenter = cardLeft + (cardWidth / 2);
+
+            // Check if this card's center is closest to viewport center
+            if (Math.abs(cardCenter - centerPosition) < cardWidth / 2) {
+                activeIndex = index;
+            }
+        });
+
+        // Update active class
+        pricingCards.forEach((card, index) => {
+            if (index === activeIndex) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+    };
+
+    // Throttle scroll event for better performance
+    let scrollTimeout;
+    pricingGrid.addEventListener('scroll', () => {
+        if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+        }
+        scrollTimeout = setTimeout(updateActiveCard, 50);
+    });
+
+    // Initial update
+    updateActiveCard();
+
+    // Update on window resize
+    window.addEventListener('resize', updateActiveCard);
+};
+
+// Initialize pricing slider when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPricingSlider);
+} else {
+    initPricingSlider();
+}
