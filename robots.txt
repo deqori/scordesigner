@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Sitemap: https://scordesigner.com/sitemap.xml
+
+# Google bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# Crawl delay
+Crawl-delay: 0
